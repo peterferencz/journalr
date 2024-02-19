@@ -19,19 +19,40 @@
     }
 </script>
 
-<h1>Login</h1>
-<p>Username</p>
-<input bind:value={username} type="text">
-<p>Password</p>
-<input bind:value={password} type="text">
-{#if error != ""}
+<div class="container">
     <div>
-        <p>{error}</p>
+        <h1>Login</h1>
+        <input placeholder="Username" bind:value={username} type="text">
+        <input placeholder="Password" bind:value={password} type="password">
+        {#if error != ""}
+            <div>
+                <p>{error}</p>
+            </div>
+        {/if}
+        <button on:click={login} class:disabled={state == "waiting"} disabled={state == "waiting"}>login</button>
     </div>
-{/if}
-<button on:click={login} class="{state == "waiting" ? "disabled" : ""}" disabled={state == "waiting"}>login</button>
+</div>
 
 <style lang="scss">
+
+.container{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    >div{
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+
+        button{
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+}
 
 .disabled{
     color: yellow;

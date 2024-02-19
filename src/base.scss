@@ -1,0 +1,32 @@
+*{
+    margin: 0px;
+    padding: 0px;
+
+    color: var(--text);
+    font-family: "OpenSans", "Arial";
+
+    transition: background-color .5s, color .5s;
+}
+
+@import "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0";
+
+@font-face {
+    font-family: "OpenSans";
+    src: url("OpenSans.ttf");
+}
+
+body{
+    background: var(--background);
+}
+
+button{
+    border: none;
+    outline: none;
+    background: var(--background);
+}
+
+input,textarea{
+    background-color: transparent;
+    border: none;
+    outline: none;
+}

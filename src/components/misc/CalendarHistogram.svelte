@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { getNameOfTheMonthLocale } from "$lib/misc";
     import { stateStore } from "$lib/stores/stateStore";
 
     //TODO abstract these to settings
     const startOfWeek = 1
+    const lettersToShow = 3;
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
     export let year:number = new Date(Date.now()).getFullYear()
@@ -13,12 +13,6 @@
     $: daysInMonth = new Date(year, month, 0).getDate()
     $: startOfMonth = new Date(year, month-1, 1).getDay()
     $: blankDays = startOfMonth + (startOfWeek > startOfMonth ? 7 : 0) - startOfWeek
-
-    function getArr(){
-        for(let i = 0; i < daysInMonth; i++){
-
-        }
-    }
 
     function seelctDayCallback(year:number, month:number, day:number) {
         $stateStore.selectedDay = {year: year, month: month, day: day}
@@ -45,27 +39,42 @@
         year -= 1
     }
 </script>
-<button on:click={decrementMonth}>&lt;</button>
-<p>{year}/{month}</p>
-<button on:click={incrementMonth}>&gt;</button>
-<div>
+
+<div class="controls">
+    <button on:click={decrementMonth}> &lt; </button>
+    <p>{year}/{month}</p>
+    <button on:click={incrementMonth}> &gt; </button>
+</div>
+<div class="container">
     {#each days as _, i}
-        <p class="day">{days[(i + startOfWeek) % days.length]}</p>
+        <p class="day">{(days[(i + startOfWeek) % days.length]).substring(0, lettersToShow) }</p>
     {/each}
     
     {#each Array(blankDays) as i}
-        <p class="blank">.</p>
+        <p class="blank"></p>
     {/each}
 
     {#each Array(daysInMonth) as _, i}
         <p on:click={() => seelctDayCallback(year, month, i+1)}
-            class={year == $stateStore.selectedDay.year && month == $stateStore.selectedDay.month && i+1 == $stateStore.selectedDay.day ? "active" : ""}
+            class:active={year == $stateStore.selectedDay.year && month == $stateStore.selectedDay.month && i+1 == $stateStore.selectedDay.day}
             >{i+1}</p>
     {/each}
 </div>
 
+
 <style lang="scss">
-div{
+.controls{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    button{
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+}
+.container{
     display: grid;
     grid-auto-flow: column;
     grid-template-rows: repeat(7, 1fr);
@@ -75,14 +84,14 @@ div{
 
     p{
         &.day{
-            width: 7rem;
+            text-align: right;
         }
         &:not(.day){
             cursor: pointer;
         }
 
         &.active{
-            background-color: tomato;
+            background: var(--accent);
         }
 
         width: 2rem;

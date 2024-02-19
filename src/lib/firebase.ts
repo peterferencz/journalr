@@ -4,7 +4,7 @@ import { initializeApp, type FirebaseApp, getApps, getApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth, inMemoryPersistence, onAuthStateChanged, setPersistence, signInWithCredential, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { addDoc, collection, deleteDoc, deleteField, doc, getDoc, getDocs, getFirestore, onSnapshot, orderBy, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { userStore } from "./stores/userStore";
-import { getDateString, getDateStringFromDateObject } from "./misc";
+import { getDateStringFromDateObject } from "./misc";
 import type { DateObject } from "./stores/stateStore";
 
 const initFirebase = () => {

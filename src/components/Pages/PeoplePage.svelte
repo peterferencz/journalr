@@ -3,7 +3,7 @@
 </script>
 
 <div>
-    <p>people</p>
+    <p>Feature [People] is under developement</p>
 </div>
 
 <style lang="scss">

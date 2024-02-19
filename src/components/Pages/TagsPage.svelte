@@ -3,7 +3,7 @@
 </script>
 
 <div>
-    <p>tags</p>
+    <p>Feature [Tags] is under developement</p>
 </div>
 
 <style lang="scss">

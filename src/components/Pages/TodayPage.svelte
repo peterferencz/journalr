@@ -24,7 +24,7 @@
     const onChange = async (entry:Entry) => {
         state = "waiting"
         if(entry.story == "" && entry.summary == ""){
-            //DELETE TODO
+            //TODO DELETE
             state = "idle"
             return
         }
@@ -69,36 +69,80 @@
         state = "idle"
     })
 
+    function autoAdjustTextareaHeight(textArea:EventTarget | null){
+        const t = textArea as HTMLTextAreaElement;
+        t.style.height = "auto"
+        t.style.height = t.scrollHeight + "px"
+
+        //TODO update on initialization
+    }
+
     
     //TODO We need to implement real time listening with onSnapshot
     //TODO input validation
 </script>
 
-<div>
-    <p>{`${$stateStore.selectedDay.year}/${$stateStore.selectedDay.month}/${$stateStore.selectedDay.day}`}</p>
-    <!-- {#await } -->
-        <!-- <p>Loading...</p> -->
-    <!-- {:then data} -->
+<div class="top">
+    <h1>{`${$stateStore.selectedDay.year}/${$stateStore.selectedDay.month}/${$stateStore.selectedDay.day}`}</h1>
+    <!-- TODO await while loading -->
     <div class="sort" bind:this={container}>
         {#each $dayStore as value, i}
-        <div data-id={value.id}>
-            <div class="sort-handle">[--]</div>
-            <input type="text" bind:value={value.summary} on:change={() => onChange(value)} disabled={state == "waiting"}>
-            <input type="text" bind:value={value.story} on:change={() => onChange(value)} disabled={state == "waiting"}>
+        <div class="entry" data-id={value.id}>
+            <div>
+                <div class="sort-handle"><span class="material-symbols-outlined">drag_indicator</span></div>
+                <input class="title" type="text" bind:value={value.summary} on:change={() => onChange(value)} disabled={state == "waiting"}>
+            </div>
+            <textarea class="description" placeholder="Describe in detail..."
+                bind:value={value.story}
+                on:input={(e) => autoAdjustTextareaHeight(e.target)}
+                on:change={() => onChange(value)}
+                disabled={state == "waiting"}
+            />
         </div>
         {/each}
     </div>
-    <!-- {/await} -->
     <input type="text" bind:value={temporaryEntry} on:keydown={e => {if(e.key == "Enter"){addNew()}}} disabled={state == "waiting"} placeholder="New entry..."/>
 </div>
 
 <style lang="scss">
-    div{
+.top{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    max-width: 70rem;
+    
+    h1{
+        font-size: 2rem;
+    }
+
+    div.sort-handle{
+        cursor: grab;
+    }
+
+    .entry{
         display: flex;
         flex-direction: column;
+        margin-bottom: 1rem;
+        align-items: stretch;
 
-        div div{
+        >div{
+            display: flex;
             flex-direction: row;
+
+            >*{
+                line-height: 1rem;
+            }
+        }
+
+        input{
+            padding-left: .5rem;
+            font-size: 1rem;
+        }
+
+        textarea{
+            padding-top: .5rem;
+            resize: vertical;
         }
     }
+}
 </style>

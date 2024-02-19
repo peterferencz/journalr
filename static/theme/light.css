@@ -1,0 +1,10 @@
+:root{
+    --background: #ffeece;
+    --background-darker: #e7d8bb;
+    --background-lighter: #fffbf4;
+
+    --text: #000000;
+    --text-disabled: #313131;
+
+    --accent: tomato;
+}
